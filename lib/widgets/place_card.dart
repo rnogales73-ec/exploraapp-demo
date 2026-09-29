@@ -13,7 +13,8 @@ class PlaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      margin: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: InkWell(
         onTap: () => Navigator.push(
           context,
@@ -24,14 +25,14 @@ class PlaceCard extends StatelessWidget {
         // textos sueltos de la tarjeta, sin contexto — el label/hint de
         // abajo describe la tarjeta completa como un solo elemento
         // interactivo, con instrucción de qué hace al tocarla.
-        child: _buildContenido(context),
-        // child: Semantics(
-        //   label: '${place.nombre}, categoría ${place.categoria}',
-        //   hint: 'Toca dos veces para ver el detalle',
-        //   button: true,
-        //   excludeSemantics: true,
-        //   child: _buildContenido(context),
-        // ),
+        // child: _buildContenido(context),
+        child: Semantics(
+          label: '${place.nombre}, categoría ${place.categoria}',
+          hint: 'Toca dos veces para ver el detalle',
+          button: true,
+          excludeSemantics: true,
+          child: _buildContenido(context),
+        ),
       ),
     );
   }
@@ -43,7 +44,8 @@ class PlaceCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.place, size: 32, color: Theme.of(context).colorScheme.primary),
+          Icon(Icons.place,
+              size: 32, color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
@@ -55,7 +57,9 @@ class PlaceCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: AppSpacing.xs),
-                Text(place.categoria, style: estilos.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                Text(place.categoria,
+                    style: estilos.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant)),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   place.descripcion,
