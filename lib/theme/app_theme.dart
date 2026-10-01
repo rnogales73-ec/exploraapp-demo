@@ -34,15 +34,13 @@ class AppTheme {
         elevation: 0,
       ),
       textTheme: const TextTheme(
-        titleLarge:
-            TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: navy),
-        titleMedium:
-            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: navy),
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: navy),
+        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: navy),
         bodyMedium: TextStyle(fontSize: 14, color: Color(0xFF222222)),
         bodySmall: TextStyle(fontSize: 12),
       ),
       cardTheme: CardThemeData(
-        elevation: 5,
+        elevation: 1,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
