@@ -18,13 +18,16 @@ class GastosScreen extends GetView<GastosController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => controller.sesionActiva.value ? _buildGastos(context) : _FormularioEntrada(controller: controller));
+    return Obx(() => controller.sesionActiva.value
+        ? _buildGastos(context)
+        : _FormularioEntrada(controller: controller));
   }
 
   Widget _buildGastos(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() => Text('${'gastos'.tr} (${controller.totalEnServidor.value})')),
+        title: Obx(
+            () => Text('${'gastos'.tr} (${controller.totalEnServidor.value})')),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -38,7 +41,9 @@ class GastosScreen extends GetView<GastosController> {
             },
             itemBuilder: (context) => const [
               PopupMenuItem(value: 'salir', child: Text('Cerrar sesión')),
-              PopupMenuItem(value: 'invalidar', child: Text('Invalidar token (solo práctica)')),
+              PopupMenuItem(
+                  value: 'invalidar',
+                  child: Text('Invalidar token (solo práctica)')),
             ],
           ),
         ],
@@ -54,7 +59,8 @@ class GastosScreen extends GetView<GastosController> {
           );
         }
         if (controller.gastos.isEmpty) {
-          return const EmptyView(mensaje: 'Aún no registras gastos en este viaje');
+          return const EmptyView(
+              mensaje: 'Aún no registras gastos en este viaje');
         }
         // TODO(sesion-06): OPCIONAL — borra la línea de abajo y descomenta el bloque completo. (Paso 10 — deslizar para actualizar)
         // Por qué: `RefreshIndicator.onRefresh` exige una función que devuelva
@@ -62,11 +68,32 @@ class GastosScreen extends GetView<GastosController> {
         // `cargarGastos` ya es `async`, así que se pasa tal cual: no hace falta
         // escribir nada nuevo. Mientras recarga, el `Obx` de arriba muestra el
         // `LoadingView` de siempre; eso es lo esperado.
-        return _buildLista(controller.gastos);
+        // return _buildLista(controller.gastos);
         // return RefreshIndicator(
         //   onRefresh: controller.cargarGastos,
         //   child: _buildLista(controller.gastos),
         // );
+        return Column(
+          children: [
+            if (controller.desdeCache.value)
+              MaterialBanner(
+                content: Text(
+                  'Sin conexión — mostrando tus gastos guardados '
+                  '(última sincronización: ${controller.ultimaSincronizacion})',
+                ),
+                leading: const Icon(Icons.cloud_off),
+                actions: [
+                  TextButton(
+                    onPressed: controller.cargarGastos,
+                    child: const Text('Reintentar'),
+                  ),
+                ],
+              ),
+            Expanded(
+              child: _buildLista(controller.gastos),
+            ),
+          ],
+        );
       }),
     );
   }
@@ -80,14 +107,17 @@ class GastosScreen extends GetView<GastosController> {
         if (i == gastos.length) {
           return Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
-            child: OutlinedButton(onPressed: controller.cargarMas, child: const Text('Cargar más')),
+            child: OutlinedButton(
+                onPressed: controller.cargarMas,
+                child: const Text('Cargar más')),
           );
         }
         final g = gastos[i];
         return ListTile(
           title: Text(g.descripcion),
           subtitle: Text('${g.categoria} · ${g.fecha}'),
-          trailing: Text(g.monto.toStringAsFixed(2), style: Theme.of(context).textTheme.titleMedium),
+          trailing: Text(g.monto.toStringAsFixed(2),
+              style: Theme.of(context).textTheme.titleMedium),
         );
       },
     );
@@ -122,33 +152,45 @@ class _FormularioEntradaState extends State<_FormularioEntrada> {
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Obx(() => ListView(
               children: [
-                const Text('Entra para ver los gastos de tu viaje. Si tu correo es nuevo, se crea la cuenta.'),
+                const Text(
+                    'Entra para ver los gastos de tu viaje. Si tu correo es nuevo, se crea la cuenta.'),
                 const SizedBox(height: AppSpacing.lg),
                 TextField(
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: 'Correo', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(
+                      labelText: 'Correo', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextField(
                   controller: _password,
                   obscureText: true,
-                  decoration: const InputDecoration(labelText: 'Contraseña (8 a 72 caracteres)', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(
+                      labelText: 'Contraseña (8 a 72 caracteres)',
+                      border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 if (c.mensajeAuth.value.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                    child: Text(c.mensajeAuth.value, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                    child: Text(c.mensajeAuth.value,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.error)),
                   ),
                 FilledButton(
-                  onPressed: c.autenticando.value ? null : () => c.entrar(_email.text.trim(), _password.text),
+                  onPressed: c.autenticando.value
+                      ? null
+                      : () => c.entrar(_email.text.trim(), _password.text),
                   child: c.autenticando.value
-                      ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2))
                       : const Text('Entrar'),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                Text('Servidor: ${ApiConfig.baseUrl}', style: Theme.of(context).textTheme.bodySmall),
+                Text('Servidor: ${ApiConfig.baseUrl}',
+                    style: Theme.of(context).textTheme.bodySmall),
               ],
             )),
       ),

@@ -14,8 +14,8 @@ import '../services/location_service.dart';
 /// `MaterialPageRoute` — Flutter sigue usando `Navigator` por debajo,
 /// `Get.to` solo evita repetir `MaterialPageRoute(builder: ...)` en cada
 /// lugar que navega, y no pide `context` para hacerlo. El corazón de
-/// favorito (Paso 6 opcional de la Sesión 4) lee `PlacesController` con
-/// `Get.find` y se repinta solo con `Obx`.
+/// favorito (Sesión 4 en memoria, Sesión 7 con Hive) lee `PlacesController`
+/// con `Get.find` y se repinta solo con `Obx`.
 class PlaceCard extends StatelessWidget {
   final Place place;
   const PlaceCard({super.key, required this.place});
@@ -24,7 +24,8 @@ class PlaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<PlacesController>();
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      margin: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Stack(
         children: [
           InkWell(
@@ -43,10 +44,15 @@ class PlaceCard extends StatelessWidget {
             child: Obx(
               () => IconButton(
                 icon: Icon(
-                  controller.esFavorito(place) ? Icons.favorite : Icons.favorite_border,
-                  color: controller.esFavorito(place) ? Colors.red : Colors.grey,
+                  controller.esFavorito(place)
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color:
+                      controller.esFavorito(place) ? Colors.red : Colors.grey,
                 ),
-                tooltip: controller.esFavorito(place) ? 'Quitar de favoritos' : 'Agregar a favoritos',
+                tooltip: controller.esFavorito(place)
+                    ? 'Quitar de favoritos'
+                    : 'Agregar a favoritos',
                 onPressed: () => controller.alternarFavorito(place),
               ),
             ),
@@ -63,7 +69,8 @@ class PlaceCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.place, size: 32, color: Theme.of(context).colorScheme.primary),
+          Icon(Icons.place,
+              size: 32, color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
@@ -78,7 +85,9 @@ class PlaceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
-                Text(place.categoria, style: estilos.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                Text(place.categoria,
+                    style: estilos.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant)),
                 // Por qué: `distanciaA` devuelve null mientras el controller
                 // no tiene la posición (antes de abrir el Mapa), así que el
                 // `Obx` no pinta nada; apenas `posicion` se llena, todas las
@@ -92,7 +101,8 @@ class PlaceCard extends StatelessWidget {
                       children: [
                         const Icon(Icons.near_me, size: 14),
                         const SizedBox(width: AppSpacing.xs),
-                        Text('A ${formatearDistancia(metros)} de ti', style: estilos.bodySmall),
+                        Text('A ${formatearDistancia(metros)} de ti',
+                            style: estilos.bodySmall),
                       ],
                     ),
                   );

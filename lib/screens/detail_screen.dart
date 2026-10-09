@@ -32,7 +32,8 @@ class DetailScreen extends StatelessWidget {
                 if (distanciaMetros != null)
                   Chip(
                     avatar: const Icon(Icons.near_me, size: 16),
-                    label: Text('A ${formatearDistancia(distanciaMetros!)} de ti'),
+                    label:
+                        Text('A ${formatearDistancia(distanciaMetros!)} de ti'),
                   ),
               ],
             ),
