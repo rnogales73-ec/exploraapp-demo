@@ -42,10 +42,10 @@ class GastosRepository {
       await _guardar(resultado.gastos);
       return (resultado.gastos, false);
     } on ApiException catch (e) {
-      final fallaDeInfraestructura =
-          e.statusCode == null || e.statusCode! >= 500;
+      final fallaDeInfraestructura = e.statusCode == null || e.statusCode! >= 500;
+      if (!fallaDeInfraestructura) rethrow;
       final guardados = _leer();
-      if (!fallaDeInfraestructura || guardados == null) rethrow;
+      if (guardados == null) rethrow;
       return (guardados, true);
     }
   }
@@ -75,7 +75,10 @@ class GastosRepository {
   }
 
   List<Gasto>? _leer() {
-    final guardado = _caja?.get(_claveGastos);
+    // Un 401 cierra la sesión (y la caja) mientras esta lectura sigue en marcha.
+    final caja = _caja;
+    if (caja == null || !caja.isOpen) return null;
+    final guardado = caja.get(_claveGastos);
     if (guardado is! List) return null;
     return guardado.map((m) => Gasto.fromMap(m as Map)).toList();
   }

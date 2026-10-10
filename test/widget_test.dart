@@ -20,6 +20,7 @@ void main() {
     hiveDirectory = Directory.systemTemp.createTempSync('exploraec_widget');
     Hive.init(hiveDirectory.path);
     await Hive.openBox<Map>('favoritos');
+    await Hive.openBox('ajustes');
   });
 
   tearDownAll(() async {

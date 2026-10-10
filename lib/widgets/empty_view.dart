@@ -6,10 +6,7 @@ import '../theme/app_theme.dart';
 class EmptyView extends StatelessWidget {
   final String mensaje;
   final IconData icono;
-  const EmptyView(
-      {super.key,
-      this.mensaje = 'No hay nada por aquí todavía',
-      this.icono = Icons.inbox_outlined});
+  const EmptyView({super.key, this.mensaje = 'No hay nada por aquí todavía', this.icono = Icons.inbox_outlined});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +21,7 @@ class EmptyView extends StatelessWidget {
             Text(
               mensaje,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ],
         ),

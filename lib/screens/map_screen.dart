@@ -48,8 +48,7 @@ class _MapScreenState extends State<MapScreen> {
             onReintentar: () => controller.cargarPosicion(forzar: true),
           );
         }
-        return _buildMapa(
-            context, controller.posicion.value!, controller.lugares);
+        return _buildMapa(context, controller.posicion.value!, controller.lugares);
       }),
       // Por qué: el `mapController` de arriba ya está conectado al
       // `FlutterMap`; este botón lo usa como "control remoto" para volver
@@ -67,8 +66,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget _buildMapa(
-      BuildContext context, Position posicion, List<Place> lugares) {
+  Widget _buildMapa(BuildContext context, Position posicion, List<Place> lugares) {
     final miUbicacion = LatLng(posicion.latitude, posicion.longitude);
     return FlutterMap(
       mapController: mapController,
@@ -87,8 +85,7 @@ class _MapScreenState extends State<MapScreen> {
               point: miUbicacion,
               width: 40,
               height: 40,
-              child:
-                  const Icon(Icons.my_location, color: Colors.blue, size: 32),
+              child: const Icon(Icons.my_location, color: Colors.blue, size: 32),
             ),
             ...lugares.map(
               (lugar) => Marker(
@@ -100,8 +97,7 @@ class _MapScreenState extends State<MapScreen> {
                         place: lugar,
                         distanciaMetros: controller.distanciaA(lugar),
                       )),
-                  child: Icon(Icons.place,
-                      color: AppTheme.colorPrimario, size: 36),
+                  child: Icon(Icons.place, color: AppTheme.colorPrimario, size: 36),
                 ),
               ),
             ),

@@ -21,8 +21,7 @@ class SettingsService {
 
   /// Idioma guardado, o español si nunca se eligió ninguno.
   static Locale get idioma {
-    final guardado =
-        Hive.box(_nombreCaja).get(_claveIdioma, defaultValue: 'es');
+    final guardado = Hive.box(_nombreCaja).get(_claveIdioma, defaultValue: 'es');
     return guardado == 'en' ? _en : _es;
   }
 

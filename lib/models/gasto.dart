@@ -41,6 +41,5 @@ class Gasto {
 
   /// Hive devuelve los mapas como `Map<dynamic, dynamic>`: por eso se copian
   /// a `Map<String, dynamic>` antes de leerlos.
-  factory Gasto.fromMap(Map mapa) =>
-      Gasto.fromJson(Map<String, dynamic>.from(mapa));
+  factory Gasto.fromMap(Map mapa) => Gasto.fromJson(Map<String, dynamic>.from(mapa));
 }
