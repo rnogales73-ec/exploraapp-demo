@@ -35,6 +35,7 @@ void main() {
     final navigation = tester.widget<BottomNavigationBar>(
       find.byType(BottomNavigationBar),
     );
-    expect(navigation.items, hasLength(4));
+    // Inicio, Mapa, Favoritos, Gastos y Asistente (Sesión 9).
+    expect(navigation.items, hasLength(5));
   });
 }
