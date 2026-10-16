@@ -47,11 +47,11 @@ class _AssistantScreenState extends State<AssistantScreen> {
       // al proxy junto con la pregunta. La respuesta se muestra en pantalla.
       final resumen = await Get.find<GastosController>().obtenerResumen();
       final r = await Get.find<AiAssistantService>().preguntar(consulta, resumen);
-      if (mounted) setState(() => _respuesta = r.respuesta);
+      setState(() => _respuesta = r.respuesta);
 
       // Por qué: si la IA propone registrar un gasto, la app NO lo hace sola.
       // Muestra un diálogo y solo si la persona acepta se llama al backend.
-      if (r.accion != null && mounted) await confirmarAccion(r.accion!);
+      if (r.accion != null) await confirmarAccion(r.accion!);
     } on ApiException catch (e) {
       if (mounted) setState(() => _error = e.mensaje);
     } on AsistenteException catch (e) {
@@ -129,7 +129,6 @@ class _AssistantScreenState extends State<AssistantScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          // TODO(sesion-09) OPCIONAL Paso 9: descomenta las 17 líneas de abajo (preguntas sugeridas).
           Wrap(
             spacing: AppSpacing.sm,
             runSpacing: AppSpacing.sm,
