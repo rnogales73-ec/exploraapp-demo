@@ -1,10 +1,8 @@
-// Solo lo usa el bloque comentado del Paso 2 (la vista amistosa).
-// ignore_for_file: unused_import
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/error_pantalla_view.dart';
+import '../widgets/error_view.dart';
 
 /// Qué hace la app con los errores que nadie esperaba — Sesión 10. Hay tres
 /// puertas por donde se escapa un error no controlado: el propio framework
@@ -48,7 +46,6 @@ class ReporteErrores {
     // depuración (o una caja gris en la versión final) y un error asíncrono
     // solo deja una línea en la consola. Con esto, los dos terminan en
     // `registrar`, y la persona ve una vista amistosa en vez de una traza.
-    // TODO(sesion-10) Paso 2: descomenta las 10 líneas de abajo (capturar errores no controlados).
     FlutterError.onError = (detalles) {
       FlutterError.presentError(detalles);
       registrar(detalles.exception, detalles.stack);
@@ -58,6 +55,6 @@ class ReporteErrores {
       avisar();
       return true;
     };
-    ErrorWidget.builder = (detalles) => const ErrorPantallaView();
+    ErrorWidget.builder = (detalles) => const ErrorView(mensaje: 'Esta pantalla tuvo un problema');
   }
 }
